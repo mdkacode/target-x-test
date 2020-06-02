@@ -8,16 +8,15 @@ import Preview from '../components/Preview/Preview'
 import TopBar from '../components/TopBar/TopBar'
 import NotesContext from '../utils/context'
 import api from '../services/axios.client'
-import { defaultNotes, defaultFolders } from '../utils/initialState'
 
 class Notes extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      notes: [...defaultNotes],
+      notes: [],
       searchPhrase: '',
-      folders: [...defaultFolders],
+      folders: [],
       current: {
         folder: 'notes',
         note: null
@@ -27,14 +26,12 @@ class Notes extends React.Component {
     this.notesWrapperRef = React.createRef()
   }
 
-  componentDidMount () {
-    api({
-      method: 'get',
-      url: 'notes'
-    }).then(data => {
-      this.setState({
-        notes: [...data.data]
-      })
+  async componentDidMount () {
+    const folders = await api('folders')
+    const notes = await api('notes')
+    this.setState({
+      notes: [...notes.data],
+      folders: [...folders.data]
     })
   }
 
@@ -150,36 +147,38 @@ render () {
   }
 
   return (
-    <NotesContext.Provider value={contextValues}>
-      <div className={styles.screen}>
-        <div className={styles.screenWrapper}>
-          <TopBar
-            addNoteFn={this.addNote}
-            deleteNoteFn={this.deleteNote}
-            searchNotesFn={this.searchNotes}
-          />
-          <div className={styles.viewWrapper}>
-            <FoldersWrapper
-              folders={folders}
-              selectFolderFn={this.selectFolder}
-              addFolderFn={this.addFolder}
-            />
-            <NotesWrapper
+    <React.Suspense fallback={<p>Loading...</p>}>
+      <NotesContext.Provider value={contextValues}>
+        <div className={styles.screen}>
+          <div className={styles.screenWrapper}>
+            <TopBar
               addNoteFn={this.addNote}
-              current={current}
-              searchPhrase={searchPhrase}
-              notes={notes}
-              selectNoteFn={this.selectNote}
-              ref={this.notesWrapperRef}
+              deleteNoteFn={this.deleteNote}
+              searchNotesFn={this.searchNotes}
             />
-            <Preview
-              note={notes.find((note) => note.id === current.note)}
-              editFn={this.editNote}
-            />
+            <div className={styles.viewWrapper}>
+              <FoldersWrapper
+                folders={folders}
+                selectFolderFn={this.selectFolder}
+                addFolderFn={this.addFolder}
+              />
+              <NotesWrapper
+                addNoteFn={this.addNote}
+                current={current}
+                searchPhrase={searchPhrase}
+                notes={notes}
+                selectNoteFn={this.selectNote}
+                ref={this.notesWrapperRef}
+              />
+              <Preview
+                note={notes.find((note) => note.id === current.note)}
+                editFn={this.editNote}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </NotesContext.Provider>
+      </NotesContext.Provider>
+    </React.Suspense>
   )
 }
 }
