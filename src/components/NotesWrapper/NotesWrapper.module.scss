@@ -5,13 +5,6 @@
 	overflow: scroll;
 }
 
-.limitWords {
-	width: 50px;
-	margin-bottom: 0px !important;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
 
 .thumbnail {
 	padding: 8px 16px;
@@ -35,6 +28,10 @@
 	font-weight: 500;
 	padding-bottom: 0px;
 	margin: 0 0 0 0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
 }
 
 .thumbnailHeaderEmpty {
@@ -65,4 +62,15 @@
 		font-weight: 300;
 		text-transform: capitalize;
 	}
+	
+}
+
+.subContent{
+	font-weight: 200;
+	font-size: 10px;
+	margin-bottom: 0rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
 }

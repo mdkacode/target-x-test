@@ -1,17 +1,15 @@
-import axios from "axios";
-import { setupCache } from "axios-cache-adapter";
-import dotenv from "dotenv";
+import axios from 'axios'
+import { setupCache } from 'axios-cache-adapter'
 // Create `axios-cache-adapter` instance
-dotenv.config();
 const cache = setupCache({
-	maxAge: 15 * 60 * 1000,
-});
+  maxAge: 15 * 60 * 1000
+})
 
-console.log(process.env);
+const API_URI = 'https://my-json-server.typicode.com/hmm-mayank/target-x-test'
 // Create `axios` instance passing the newly created `cache.adapter`
 const api = axios.create({
-	adapter: cache.adapter,
-	baseURL: `${process.env.END_POINT}`,
-});
+  adapter: cache.adapter,
+  baseURL: API_URI
+})
 
-export default api;
+export default api
