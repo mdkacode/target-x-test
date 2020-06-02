@@ -5,7 +5,7 @@ const cache = setupCache({
   maxAge: 15 * 60 * 1000
 })
 
-const API_URI = 'https://my-json-server.typicode.com/hmm-mayank/target-x-test'
+const API_URI = 'https://my-json-server.typicode.com/hmm-mayank/target-x-test' // this should come from the Env
 // Create `axios` instance passing the newly created `cache.adapter`
 const api = axios.create({
   adapter: cache.adapter,

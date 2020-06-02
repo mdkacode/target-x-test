@@ -4,18 +4,24 @@ import PropTypes from 'prop-types'
 import styles from '../FoldersWrapper.module.scss'
 
 class NewFolderInput extends React.Component {
-  validateFolderName = (e) => {
-    const { addFolderFn, toggleFolderCreationFn } = this.props
-    const name = e.target.value
+    handleValidateFolderName = (e) => {
+      const { addFolderFn, toggleFolderCreationFn } = this.props
+      const name = e.target.value
 
-    if (name !== '') {
-      addFolderFn({
-        name: name,
-        url: name.toLowerCase()
-      })
+      if (name !== '') {
+        addFolderFn({
+          name: name,
+          url: name.toLowerCase()
+        })
+      }
+
+      toggleFolderCreationFn()
     }
 
-    toggleFolderCreationFn()
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.handleValidateFolderName(e)
+    }
   }
 
   render () {
@@ -24,7 +30,8 @@ class NewFolderInput extends React.Component {
         <input
           autoFocus
           className={styles.input}
-          onBlur={this.validateFolderName}
+          onBlur={this.handleValidateFolderName}
+          onKeyDown={this.handleKeyDown}
           placeholder='New folder'
           type='text'
         />
