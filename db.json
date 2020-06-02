@@ -1,12 +1,14 @@
-[
-	{
-		"content": "Target-x test Notes",
-		"folder": "random",
-		"id": 124111251
-	},
-	{
-		"content": "Notes Check",
-		"folder": "random",
-		"id": 124111252
-	}
-]
+{
+	"notes": [
+		{
+			"content": "Target-x test Notes",
+			"folder": "random",
+			"id": 124111251
+		},
+		{
+			"content": "Notes Check",
+			"folder": "random",
+			"id": 124111252
+		}
+	]
+}
