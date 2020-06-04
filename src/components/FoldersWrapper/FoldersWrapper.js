@@ -19,6 +19,12 @@ class FoldersWrapper extends React.Component {
 
   render () {
     const { folders, selectFolderFn, addFolderFn } = this.props
+    // Sorting alphabatically
+    folders.sort((first, second) => {
+      if (first.name < second.name) { return -1 }
+      if (first.name > second.name) { return 1 }
+      return 0
+    })
     return (
       <div className={styles.wrapper}>
         {
