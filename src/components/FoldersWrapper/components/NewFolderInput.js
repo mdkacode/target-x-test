@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import styles from '../FoldersWrapper.module.scss'
+import api from '../../../services/axios.client'
 
 class NewFolderInput extends React.Component {
     handleValidateFolderName = (e) => {
@@ -9,9 +10,20 @@ class NewFolderInput extends React.Component {
       const name = e.target.value
 
       if (name !== '') {
-        addFolderFn({
+        const folderObject = {
           name: name,
           url: name.toLowerCase()
+        }
+        addFolderFn(folderObject)
+
+        api({
+          method: 'post',
+          url: 'folders',
+          data: folderObject
+        }).then(e => {
+          // console.log(`Folder Created Successfully ${e}`)  // open when debugging
+        }).catch((error) => {
+          console.log('NEW FOLDER CREATION ERROR', error)
         })
       }
 

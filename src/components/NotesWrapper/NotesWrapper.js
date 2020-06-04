@@ -9,7 +9,7 @@ const NotesWrapper = React.forwardRef((props, ref) => {
   const { current, notes, searchPhrase, selectNoteFn } = props
 
   let notesToRender = current.folder === 'notes' ? notes : notes.filter((note) => note.folder === current.folder)
-  notesToRender = notesToRender.filter((note) => note.content.includes(searchPhrase))
+  notesToRender = notesToRender.filter((note) => note.content.includes(searchPhrase.toLowerCase()))
 
   return (
     <div ref={ref} className={styles.wrapper}>

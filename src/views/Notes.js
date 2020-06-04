@@ -1,7 +1,6 @@
 import React from 'react'
 
 import styles from './Notes.module.scss'
-
 import FoldersWrapper from '../components/FoldersWrapper/FoldersWrapper'
 import NotesWrapper from '../components/NotesWrapper/NotesWrapper'
 import Preview from '../components/Preview/Preview'
@@ -84,11 +83,21 @@ deleteNote = () => {
 };
 
 editNote = (e) => {
+  console.log(e)
   const notesCopy = [...this.state.notes]
   const notesToEdit = notesCopy.findIndex(
     (note) => note.id === this.state.current.note)
+
   notesCopy[notesToEdit].content = e.target.value
-  notesCopy[notesToEdit].editDate = new Date()
+  api({
+    url: `notes/${notesCopy[notesToEdit].id}`,
+    method: 'PUT',
+    data: notesCopy[notesToEdit].content
+  }).then((stauts) => {
+    console.info(`Successfully Updated ${stauts}`)
+  }).catch(error => {
+    console.error(error)
+  })
 
   this.setState({
     notes: [...notesCopy]
@@ -172,7 +181,7 @@ render () {
               />
               <Preview
                 note={notes.find((note) => note.id === current.note)}
-                editFn={this.editNote}
+                editFn={this.editNote} // for real will be using debounce to restrict the number of the calls
               />
             </div>
           </div>
